@@ -2,7 +2,7 @@
 # membuat class Animal
 class Animal{
     # property animals
-    public $animals;
+    public $animals; 
 
     # method constructor - mengisi data awal
     # parameter: data hewan (array)
@@ -13,8 +13,7 @@ class Animal{
     # method index - menampilkan data animals
     public function index(){
         # gunakan foreach untuk menampilkan data animals (array)
-        $animals = $this->animals;
-        foreach ($animals as $animal){
+        foreach ($this->animals as $animal){
             echo $animal.'<br>';
         }
     }
@@ -23,21 +22,17 @@ class Animal{
     # parameter: hewan baru
     public function store($data){
         # gunakan method array_push untuk menambahkan data baru
-        $animals = $this->animals;
-        array_push($animals, $data);
-        foreach ($animals as $animal){
-            echo $animal.'<br>';
+        array_push($this->animals, $data);
+        foreach ($this->animals as $animal){
         }
     }
 
     # method update - mengupdate hewan
     # parameter: index dan hewan baru
     public function update($index, $data){
-        $animals = $this->animals;
         $new = $data;
-        $animals[$index]= $new;
-        foreach ($animals as $animal){
-            echo $animal.'<br>';
+        $this->animals[$index]= $new;
+        foreach ($this->animals as $animal){
         }
     }
 
@@ -45,10 +40,8 @@ class Animal{
     # parameter: index
     public function destroy($index){
         # gunakan method unset atau array_splice untuk menghapus data array
-        $animals = $this->animals;
-        unset($animals[$index]); // Unset
-        foreach ($animals as $animal){
-            echo $animal.'<br>';
+        unset($this->animals[$index]); // Unset
+        foreach ($this->animals as $animal){
         }
     }
 }
@@ -63,12 +56,15 @@ echo "<br>";
 
 echo "Store - Menambahkan hewan baru <br>";
 $animal->store('Burung');
+$animal->index();
 echo "<br>";
 
 echo "Update - Mengupdate hewan <br>";
 $animal->update(0, 'Kucing Anggora');
+$animal->index();
 echo "<br>";
 
 echo "Destroy - Menghapus hewan <br>";
 $animal->destroy(1);
+$animal->index();
 echo "<br>";
