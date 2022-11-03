@@ -9,7 +9,7 @@ class Student extends Model
 {
     use HasFactory;
 
-    // protected $table = 'students';
+    protected $table = 'students';
 
     # define model attributes to make mass assignable
     protected $fillable = ['nama','nim','email','jurusan'];
