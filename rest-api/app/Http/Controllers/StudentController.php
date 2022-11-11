@@ -13,7 +13,7 @@ class StudentController extends Controller
 
         $data = [
             'message' => 'Get all students',
-            'data' => $students,
+            'data' => $students
         ];
 
         # menggunakan response json laravel
@@ -27,18 +27,19 @@ class StudentController extends Controller
     # membuat method store
     public function store(Request $request){
         # menangkap data request
-        $input = [
-            'nama' => $request->nama,
-            'nim' => $request->nim,
-            'email' => $request->email,
-            'jurusan' => $request->jurusan,
-        ];
+        $validateData = $request->validate([
+            # kolom => rules|rules
+            'nama' => 'required',
+            'nim' => 'numeric|required',
+            'email' => 'email|required',
+            'jurusan' => 'required'
+        ]); 
 
-        # menggunakan Student untuk insert data
-        $student = Student::create($input);
+        # menggunakan model Student untuk insert data
+        $student = Student::create($validateData);
         $data = [
             'message' => 'Student is created succesfully',
-            'data' => $student,
+            'data' => $student
         ];
 
         # mengembalikan data (json) status code 201
@@ -57,7 +58,7 @@ class StudentController extends Controller
                 'nama' => $request->nama ?? $student->nama,
                 'nim' => $request->nim ?? $student->nim,
                 'email' => $request->email ?? $student->email,
-                'jurusan' => $request->jurusan ?? $student->jurusan,
+                'jurusan' => $request->jurusan ?? $student->jurusan
             ];
 
             # melakukan update data
@@ -65,14 +66,14 @@ class StudentController extends Controller
 
             $data = [
                 'message' => 'Student is updated',
-                'data' => $student,
+                'data' => $student
             ];
 
             # mengembalikan data (json) status code 200
             return response()->json($data, 200);
         }else{
             $data = [
-                'message' => 'Student is not found',
+                'message' => 'Student is not found'
             ];
 
             return response()->json($data, 404);
@@ -90,14 +91,14 @@ class StudentController extends Controller
             $student->delete();
 
             $data = [
-                'message' => 'Student is deleted',
+                'message' => 'Student is deleted'
             ];
 
             # mengembalikan data (json) status code 200
             return response()->json($data, 200);
         }else{
             $data = [
-                'message' => 'Student not found',
+                'message' => 'Student not found'
             ];
 
             return response()->json($data, 404);
@@ -113,14 +114,14 @@ class StudentController extends Controller
         if ($student){
             $data = [
                 'message' => 'Get detail student',
-                'data' => $student,
+                'data' => $student
             ];
 
             # mengembalikan data (json) dan code 200
             return response()->json($data, 200);
         }else{
             $data = [
-                'message' => 'Student not found',
+                'message' => 'Student not found'
             ];
 
             # mengembalikan data (json) dan code 404
