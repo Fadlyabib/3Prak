@@ -5,7 +5,7 @@
  */
  const showDownload = (result) => {
     console.log("Download selesai");
-    console.log("Hasil Download: " + result);
+    console.log(`Hasil Download: ${result}`);
   };
   
   /**
@@ -21,7 +21,7 @@
     });
   };
   
-download(showDownload);
+  download(showDownload);
   
   /**
    * TODO:
