@@ -28,15 +28,56 @@ class Student{
             });
         })
     }
-
-    static create(req){
+    
+    // solution with promise and async await
+    static async create(data, callback){
         /**
          * method menerima parameter data yang akan di insert
          * method mengembalikan data student yang baru di insert
          */
+
+        // promise 1: melakukan insert data ke database 
+        const id = await new Promise ((resolve, reject) => {
+            const sql = "INSERT INTO students SET ?";
+            db.query(sql, data, (err, results) => {
+                resolve(results.insertId);
+            });
+        });
+        
+        // refactor promise 2: get data berdasarkan id
+        const student = this.find(id);
+        return student;
+    }
+
+    static find(id){
         return new Promise((resolve, reject) => {
-            const query = `INSERT INTO students (nama, nim, email, jurusan) values (${req})`;
-            db.query(query, (err, results) => {
+            const sql = "SELECT * FROM students WHERE id = ?";
+            db.query(sql, id, (err, results) => {
+                // destructing array
+                const [stundet] = results;
+                resolve(stundet);
+            });
+        });
+    }
+
+    // update data students
+    static async update(id, data){
+        await new Promise((resolve, reject) => {
+            const sql = "UPDATE students SET ? WHERE id = ?";
+            db.query(sql, [data, id], (err, results) => {
+                resolve(results);
+            });
+        });
+
+        // mencari data yang baru di update
+        const student = await this.find(id);
+        return student;
+    }
+
+    static delete(id){
+        return new Promise((resolve, reject) => {
+            const sql = "DELETE FROM students WHERE id = ?";
+            db.query(sql, id, (err, results) => {
                 resolve(results);
             });
         });

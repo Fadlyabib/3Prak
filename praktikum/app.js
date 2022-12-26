@@ -14,4 +14,7 @@ app.use(express.urlencoded());
 app.use(router);
 
 // mendefinisikan port
-app.listen(3000);
+const PORT = 3000;
+app.listen(PORT, () => 
+console.log(`Server running at: http://localhost:${PORT}`)
+);
